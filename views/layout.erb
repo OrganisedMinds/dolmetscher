@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" />
+    <link rel="stylesheet" href="/css/bootstrap-responsive.min.css" media="screen" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="navbar navbar-static-top">
+        <div class="navbar-inner">
+          <a class="brand" href="/">Dolmetscher</a>
+          <ul class="nav">
+            <li><a href="/project/add_project">Add project</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <% if content_for?(:breadcrumb) %>
+        <br />
+        <ul class="breadcrumb">
+          <% yield_content :breadcrumb %>
+        </ul>
+     <% end %>
+
+      <div class="row">
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+  <script src="/js/bootstrap.min.js"></script>
+  <% yield_content :script %>
+</html>

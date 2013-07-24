@@ -1,0 +1,22 @@
+<% content_for :breadcrumb do %>
+  <li><a href="/">Home</a> <span class="divider">/</span></li>
+  <li><a href="/project/<%= @project.id %>"><%= @project.name %></a> <span class="divider">/</span></li>
+  <li class="active"><%= @locale %></li>
+<% end %>
+
+<h1><%= @project.name %> <small>project</small></h1>
+
+<h2><%= @locale %> <small>locale</small></h2>
+
+<% unless @project.default_locale == @locale %>
+  <p><%= @translations.keys.count %> / <%= @base_translations.keys.count %> translations done</p>
+<% end %>
+
+<ul class="nav nav-pills">
+  <% unless @project.default_locale == @locale %>
+    <li><a href="/project/<%= @project.id %>/<%= @locale %>/missing">Manage missing translations</a></li>
+  <% end %>
+  <li><a href="/project/<%= @project.id %>/<%= @locale %>/find">Find translation</a></li>
+  <li><a href="/project/<%= @project.id %>/<%= @locale %>/redo">Retranslate</a></li>
+</ul>
+

@@ -1,0 +1,56 @@
+<% content_for :breadcrumb do %>
+  <li><a href="/">Home</a> <span class="divider">/</span></li>
+  <li><a href="/project/<%= @project.id %>"><%= @project.name %></a> <span class="divider">/</span></li>
+  <li><a href="/project/<%= @project.id %>/<%= @locale %>"><%= @locale %></a> <span class="divider">/</span></li>
+  <li><a href="/project/<%= @project.id %>/<%= @locale %>/find">Find</a> <span class="divider">/</span></li>
+  <li class="active">Found</li>
+<% end %>
+
+
+<h1><%= @project.name %> <small>project</small></h1>
+
+<h2><%= @query %> <small>searching</small></h2>
+
+<h3><%= @project.default_locale %> <small>found</small></h3>
+<table class="table table-condensed table-hover">
+  <thead>
+    <tr>
+      <th>Key</th><th>Translation</th><th>File</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @default.each do |lookup, value| %>
+      <tr>
+        <td><em><%= lookup %></em></td>
+        <td><%= value %></td>
+        <td>
+          <% file = @project.file_for(lookup) %>
+          <a href="/project/<%= @project.id %>/<%= @project.default_locale %>/redo/<%= Rack::Utils.escape file %>"><%= file %></a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% unless @project.default_locale == @locale %>
+<h3><%= @locale %> <small>found</small></h3>
+<table class="table table-condensed table-hover">
+  <thead>
+    <tr>
+      <th>Key</th><th>Translation</th><th>File</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @trans.each do |lookup, value| %>
+      <tr>
+        <td><em><%= lookup %></em></td>
+        <td><%= value %></td>
+        <td>
+          <% file = @project.file_for(lookup) %>
+          <a href="/project/<%= @project.id %>/<%= @locale %>/redo/<%= Rack::Utils.escape file %>"><%= file %></a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>

@@ -1,0 +1,23 @@
+<% content_for :breadcrumb do %>
+  <li><a href="/">Home</a> <span class="divider">/</span></li>
+  <li class="active"><%= @project.name %></li>
+<% end %>
+
+<h1><%= @project.name %> <small>project</small></h1>
+
+
+<h2>Detected locales</h2>
+
+<% @project.locales.sort.each do |locale| %>
+  <a href="/project/<%= @project.id %>/<%= locale %>"><%= locale %></a>
+  <% unless @project.default_locale == locale %>
+    [ <a href="/project/<%= @project.id %>/<%= locale %>/default" title="Make default">D</a> | <a href="/project/<%= @project.id %>/<%= locale %>?method=DELETE" title="Delete all files">X</a> ]
+  <% end %>
+  <br />
+<% end %>
+
+<form method="PUT" action="/project/<%= @project.id %>/add_locale">
+  <label for="new_locale" />
+  <input type="text" name="new_locale" id="project_new_locale" placeholder="de-CH" />
+  <input type="submit" value="Add" />
+</form>

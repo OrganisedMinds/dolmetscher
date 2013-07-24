@@ -1,0 +1,23 @@
+<% content_for :breadcrumb do %>
+  <li><a href="/">Home</a> <span class="divider">/</span></li>
+  <li><a href="/project/<%= @project.id %>"><%= @project.name %></a> <span class="divider">/</span></li>
+  <li><a href="/project/<%= @project.id %>/<%= @locale %>"><%= @locale %></a> <span class="divider">/</span></li>
+  <li class="active">Redo</li>
+<% end %>
+
+<h1><%= @project.name %> <small>project</small></h1>
+
+<h2><%= @locale %> <small>locale</small></h2>
+
+<h3>Files <small>to redo</small></h3>
+
+<% left = []; right = []; @files.sort.each_slice(2) { |l,r| left << l; right << r } %>
+<% [ left, right ].each do |col| %>
+  <div class="span3">
+    <ul class="nav nav-pills nav-stacked">
+      <% col.each do |file| %>
+        <li><a href="/project/<%= @project.id %>/<%= @locale %>/redo/<%= Rack::Utils.escape file %>"><%= file %></a></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

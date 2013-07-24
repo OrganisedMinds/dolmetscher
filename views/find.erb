@@ -1,0 +1,20 @@
+<% content_for :breadcrumb do %>
+  <li><a href="/">Home</a> <span class="divider">/</span></li>
+  <li><a href="/project/<%= @project.id %>"><%= @project.name %></a> <span class="divider">/</span></li>
+  <li><a href="/project/<%= @project.id %>/<%= @locale %>"><%= @locale %></a> <span class="divider">/</span></li>
+  <li class="active">Find</li>
+<% end %>
+
+
+<h1><%= @project.name %> <small>project</small></h1>
+
+<h2><%= @locale %> <small>locale</small></h2>
+
+<h3>Find</h3>
+
+<form method="POST" action="/project/<%= @project.id %>/<%= @locale %>/find">
+  <label for="query">Query</label>
+  <input type="text" name="query" id="query" autofocus=true placeholder="Enter a search string" />
+  <br />
+  <input type="submit" value="Find" class="btn btn-primary" />
+</form>

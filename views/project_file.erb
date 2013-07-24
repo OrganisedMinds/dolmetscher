@@ -1,0 +1,41 @@
+<% content_for :breadcrumb do %>
+  <li><a href="/">Home</a> <span class="divider">/</span></li>
+  <li><a href="/project/<%= @project.id %>"><%= @project.name %></a> <span class="divider">/</span></li>
+  <li><a href="/project/<%= @project.id %>/<%= @locale %>"><%= @locale %></a> <span class="divider">/</span></li>
+  <li><a href="/project/<%= @project.id %>/<%= @locale %>/redo">Redo</a> <span class="divider">/</span></li>
+  <li class="active"><%= @file %></li>
+<% end %>
+
+<h1><%= @project.name %> <small>project</small></h1>
+
+<h2><%= @locale %> <small>locale</small></h2>
+
+<h3><%= @file %> <small>redo</small></h3>
+
+<form method="POST" action="/project/<%= @project.id %>/<%= @locale %>/add_translations">
+  <input type="hidden" name="file" value='<%= @file %>' />
+
+  <table class="table table-condensed table-hover">
+    <tr>
+      <th>Key</th>
+      <% if @locale != @project.default_locale %>
+        <th>Default (<%= @project.default_locale %>)</th>
+      <% end %>
+      <th>Translation (<%= @locale %>)</th>
+    </tr>
+
+    <% @translations.each do |lookup, value| %>
+      <tr>
+        <td><label for="<%= lookup %>"><em><%= lookup %></em></label></td>
+        <% if @locale != @project.default_locale %>
+          <td><%= @base_translations[lookup] %></td>
+        <% end %>
+        <td><textarea class="span4" name="<%= lookup %>" cols="40" rows="2"><%= value %></textarea></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="2">&nbsp;</td>
+      <td><input type="submit" class="btn btn-primary" /></td>
+    </tr>
+  </table>
+</form>

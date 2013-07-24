@@ -1,0 +1,29 @@
+<br />
+<div class="hero-unit">
+  <h1>Dolmetscher</h1>
+  <p>Translate ruby projects</p>
+  <p>
+    <select id="project" class="input-large" style="height: 40px; margin-top: 8px;">
+      <optgroup label='-- Pick a project'>
+        <% @projects.each do |project| %>
+          <option value="<%= project.id %>"><%= project.name %></option>
+        <% end %>
+      </optgroup>
+      <optgroup label='-- or'>
+        <option value="add_project">Add a new one</option>
+      </optgroup>
+
+    </select>
+    <a id="switcher" class="btn btn-primary btn-large">Go !</a>
+  </p>
+</div>
+
+<% content_for :script do %>
+<script>
+  $(function() {
+    $('#switcher').on('click', function() {
+      window.location.href = '/project/' + $('#project').val();
+    });
+  }());
+</script>
+<% end %>

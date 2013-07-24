@@ -1,0 +1,42 @@
+<% content_for :breadcrumb do %>
+  <li><a href="/">Home</a> <span class="divider">/</span></li>
+  <li><a href="/project/<%= @project.id %>"><%= @project.name %></a> <span class="divider">/</span></li>
+  <li><a href="/project/<%= @project.id %>/<%= @locale %>"><%= @locale %></a> <span class="divider">/</span></li>
+  <li class="active">Missing</li>
+<% end %>
+
+<h1><%= @project.name %> <small>project</small></h1>
+
+<h2><%= @locale %> <small>locale</small></h2>
+
+<% if @missing_files.any? %>
+  <h3>Missing files</h3>
+  <% @missing_files.each do |path| %>
+    <%= File.basename(path) %>.<%= @locale %>.yml <a href="/project/<%= @project.id %>/<%= @locale %>/create_file/<%= Rack::Utils.escape path %>">create?</a><br />
+  <% end %>
+<% end %>
+
+<% if @missing_translations.any? %>
+  <h3>Missing translations</h3>
+  <form method="POST" action="/project/<%= @project.id %>/<%= @locale %>/add_translations">
+    <table class="table table-condensed table-hover">
+      <tr>
+        <th>Key</th><th>Default (<%= @project.default_locale %>)</th><th>Translation (<%= @locale %>)</th>
+      </tr>
+
+      <% @missing_translations.each do |lookup| %>
+        <tr>
+          <td><label for="<%= lookup %>"><em><%= lookup %></em></label></td>
+          <td><%= @base_translations[lookup] %></td>
+          <td><textarea class="span4" name="<%= lookup %>" cols="40" rows="2"></textarea></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td colspan="2">&nbsp;</td>
+        <td><input type="submit" class="btn btn-primary" /></td>
+      </tr>
+    </table>
+  </form>
+<% else %>
+  <em>These are not the translations you are looking for</em>
+<% end %>
