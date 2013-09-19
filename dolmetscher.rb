@@ -97,10 +97,10 @@ class Project
     hash.each do |key, value|
       new_lookup = (lookup.split(".").push(key)).join(".")
 
-      if value.is_a?(String) || value.is_a?(Array)
-        table[new_lookup] = value
-      else
+      if value.is_a?(Hash)
         table = to_lookup_table(value, table, new_lookup).merge(table)
+      else
+        table[new_lookup] = value
       end
     end
 
